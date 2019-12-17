@@ -136,7 +136,7 @@ if __name__ == '__main__' :
     (0, 0)        (0, width)
     (height, 0)   (height, width)
 
-    This is how the 2d plane of p5 looks.
+    This is how the 2d plane of p5 looks like.
 
     But in real life, origin (0, 0) is situated at the bottom left corner.
     To map a point of the p5 plane to the real life and viceversa, we have to find its image with respect to the line y = height/2.
