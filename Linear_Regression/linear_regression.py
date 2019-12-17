@@ -88,8 +88,6 @@ def predict_new(x, m, c) :
 
 def main () :
     dataset_file = check_usage()
-    # dataset_file = "data.csv"
-    # dataset_file = input()
 
     # Parse the dataset
     x_column, y_column, mean_x, mean_y, data_len = parse_dataset(dataset_file)
