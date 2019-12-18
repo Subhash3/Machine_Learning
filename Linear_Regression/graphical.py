@@ -123,6 +123,7 @@ def export_dataset(point) :
 if __name__ == '__main__' :
     arguments = sys.argv
     argc = len(arguments)
+    print("Usage: ", arguments[0], " [filename to export data]", sep="")
     if argc == 2 :
         file = arguments[1]
         fp = open(file, 'w')

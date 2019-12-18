@@ -123,7 +123,7 @@ def main () :
     info += "Slope m: " + str(m) + "\n"
     info += "Intercept c: " + str(c) + "\n"
     info += "R^2: " + str(RSquare)[:9]
-    plt.text(3, 90, info)
+    # plt.text(3, 90, info)
     plt.legend()
     plt.show()
 
