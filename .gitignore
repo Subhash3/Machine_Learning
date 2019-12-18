@@ -1,5 +1,7 @@
+*.pkl
 .gitignore
 Linear_Regression/datasets
+Linear_Regression/*.pkl
 Linear_Regression/__*
 Linear_Regression/week*
 Linear_Regression/ReadMe.html
