@@ -13,6 +13,9 @@ class Model() :
     m = c = 0
     data_len = 0
 
+    Learning_rate = 0.1
+    iterations = 1000
+
     def __parse_dataset(self, dataset_file) :
         # Read the csv dataset
         dataset_filehandler = open(dataset_file)
@@ -35,40 +38,53 @@ class Model() :
         # return x_column, y_column, mean_x, mean_y, len_x
         return
 
-    def __calc_slope(self, x_values, y_values, mean_x, mean_y, data_len) :
-        # calculate m
-        numerator = 0 # sum((x-mean_x)(y-mean_y))
-        denominator = 0 # sum((x-mean_x)^2)
+    def compute_error(self) :
+        N = self.data_len
+        X = self.x_column
+        Y = self.y_column
+        m = self.m
+        c = self.c
+        error = 0
 
-        # print(numerator, denominator, self.x_column, self.y_column, self.mean_x, self.mean_y)
+        for i in range(N) :
+            error += 1/N * (Y[i] - (m*X[i] + c)) ** 2
 
-        for i in range(data_len) :
-            numerator += (x_values[i] - mean_x) * (y_values[i] - mean_y)
-            denominator += (x_values[i] - mean_x)**2
-            # print(numerator, denominator)
-        m = numerator/denominator
+        return error
 
-        return m
-
-    def __calc_intercept(self, x_coord, y_coord, slope) :
-        # calculate c
-        # c = y_mean - m*x_mean
-
-        c = y_coord - slope * x_coord
-        return c
-
-    def train(self, dataset_file) :
-        # print("Parsing..")
+    def train(self, dataset_file) : # Using gradient descent
         self.__parse_dataset(dataset_file)
-        # print("Calculating slope")
-        self.m = self.__calc_slope(self.x_column, self.y_column, self.mean_x, self.mean_y, self.data_len)
-        # print("Calculating Intercept")
-        self.c = self.__calc_intercept(self.mean_x, self.mean_y, self.m)
+        m = 0
+        c = 0
+        iterations = self.iterations
+        X = self.x_column
+        Y = self.y_column
+        N = self.data_len
+        L = self.Learning_rate
 
-        print("Model trained successfully")
+        print("X: ", X, "Y: ", Y, "N: ", N, "L: ", L)
 
-        # return m, c
-        return
+        for i in range(iterations) :
+            error = self.compute_error()
+            print("Error: ", str(error)[:5], "m: ", m, "c: ", c)
+            Dm = 0
+            for j in range(N) :
+                Dm += (-2/N) * (Y[j] - (m*X[j] + c)) * X[j]
+
+            Dc = 0
+            for j in range(N) :
+                Dc += (-2/N) * (Y[j] - (m*X[j] + c))
+
+            print("Dm: ", str(Dm)[:5], "Dc: ", str(Dc)[:5])
+
+
+            m = m - Dm*L
+            c = m - Dc*L
+
+            self.m = m
+            self.c = c
+
+        print("Model Trained successfully using Gradient Descent")
+        return m, c
 
     def predict(self, x) :
         m = self.m
@@ -110,5 +126,7 @@ class Model() :
         fp = open(object_file, 'wb')
         pickle.dump(self, fp)
         fp.close()
+
+        print("Model successfully saved to ", object_file)
 
         return

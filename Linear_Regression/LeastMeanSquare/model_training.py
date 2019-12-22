@@ -9,18 +9,15 @@ from model_class import Model
 
 def check_usage() :
     arguments = sys.argv
-    if len(arguments) < 2 :
-        print("Usage: ", arguments[0], " <csv-data-set> [File to store Model Object]")
+    if len(arguments) != 3 :
+        print("Usage: ", arguments[0], " <csv-data-set> <File to store Model Object>")
         quit()
-    data_file = object_file = None
-    if len(arguments) >= 2 :
-        data_file = arguments[1]
-        file_extension = data_file.split('.')[-1]
-        if file_extension != "csv" :
-            print("Data set must be a CSV file")
-            quit()
-    if len(arguments) >= 3 :
-        object_file = arguments[2] + '.pkl'
+    data_file = arguments[1]
+    file_extension = data_file.split('.')[-1]
+    if file_extension != "csv" :
+        print("Data set must be a CSV file")
+        quit()
+    object_file = arguments[2] + '.pkl'
     return data_file, object_file
 
 
@@ -30,8 +27,7 @@ def main () :
     model = Model()
     model.train(dataset_file)
     model.calc_RSquare()
-    if object_file != None :
-        model.save_model(object_file)
+    model.save_model(object_file)
 
     while True :
         x = input("Enter an integer: ")

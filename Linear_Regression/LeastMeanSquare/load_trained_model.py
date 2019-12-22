@@ -15,10 +15,20 @@ def check_usage() :
 
 def main() :
     trained_model = check_usage()
-    fp = open(trained_model ,'rb')
-    model = pickle.load(fp)
+    try :
+        fp = open(trained_model ,'rb')
+    except Exception as e :
+        print("Exception occurred while opening file ", trained_model)
+        print(e)
+    try :
+        model = pickle.load(fp)
+    except Exception as e :
+        print("Exception occurred Loading model ", trained_model)
+        print(e)
 
     # model.calc_RSquare()
+    print("-=-= Lets Predict :D =-=-")
+    print("Enter any character to quit.")
     while True :
         x = input("Enter an integer: ")
         try :
