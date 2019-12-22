@@ -1,6 +1,7 @@
 Exercises/
 *.pkl
 .gitignore
+__*
 Linear_Regression/datasets
 Linear_Regression/*.pkl
 Linear_Regression/__*
